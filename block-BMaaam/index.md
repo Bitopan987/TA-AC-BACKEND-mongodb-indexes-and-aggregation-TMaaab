@@ -5,29 +5,33 @@ Insert the data present in users.json into local mongodb database using `mongoim
 Write aggregation queries to perform following tasks.
 
 1. Find all users who are active.
+   db.User.aggregate([{ $match: { isActive: true }}]).pretty();
 
 2. Find all users whose name includes `blake` case insensitive.
+   db.User.createIndex({name:"text"})
+   db.User.find( { $text: { $search:"blake"} })
 
 3. Find all males.
-
+   db.User.aggregate([{ $match: { gender: "male" }}]).pretty();
 4. Find all active males.
-
+   db.User.aggregate([{ $match: { gender: "male",isActive:true }}]).pretty();
 5. Find all active females whose age is >= 25.
-
+   db.User.aggregate([{ $match: { gender: "female",age:{$gte : 25} }}]).pretty();
 6. Find all 40+ males with green eyecolor.
-
+   db.User.aggregate([{ $match: { gender: "male",eyeColor:"green",age:{$gte : 25} }}]).pretty();
 7. Find all blue eyed men working in 'USA'.
-
+   db.User.aggregate([{ $match: { gender: "male",eyeColor:"green",'company.location.country': 'USA' }}]).pretty();
 8. Find all female working in Germany with green eyes and apple as favoriteFruit.
-
+   db.User.aggregate([{ $match: { gender: "female",eyeColor:"green",'company.location.country': 'Germany',favoriteFruit:"apple" }}]).pretty();
 9. Count total male and females.
-
+   db.User.aggregate([{$group: {_id: "$gender",count: { $sum: 1 },},},]);
 10. Count all whose eyeColor is green.
-
+    db.User.aggregate([{$group: {_id: "$eyeColor",count: { $sum: 1 },},},]);
 11. Count all 20+ females who have brown eyes.
 
 12. Count all occurences of all eyeColors.
     Something like:-
+    db.User.aggregate([{$group: {_id: "$eyeColor",count: { $sum: 1 },},},]);
 
 ```
 blue -> 30
