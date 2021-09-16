@@ -24,5 +24,3 @@ userSchema.index({ name: 'text' });
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
-
-// db.User.aggregate([{ $match: { isActive: true }}]);
