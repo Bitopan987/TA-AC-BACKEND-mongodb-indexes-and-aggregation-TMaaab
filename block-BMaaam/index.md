@@ -40,7 +40,7 @@ green -> 123
 ```
 
 13. Count all females whose tags array include `amet` in it.
-
+    db.User.aggregate([{$match: {gender: 'female', tags: 'amet'}}, {$group: {_id: '$gender', count: {$sum:1}}} ]).pretty()
 14. Find the average age of entire collection
     db.User.aggregate([ {$group: {_id: null , avgAge: {$avg: '$age'}}} ]).pretty()
 15. Find the average age of males and females i.e. group them by gender.
